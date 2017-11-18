@@ -1,0 +1,36 @@
+--EsTA prueba consiste en tratar un documento, justamente el codigo fuente del programa principal de la práctica 
+--Para ver como lo trata: 
+WITH Ada.Text_Io, Ppalabra, Ada_Fichero_Palabra; 
+USE Ada.Text_Io, Ada_Fichero_Palabra; 
+PROCEDURE Formateador IS 
+   Argumentos_Correctos : Boolean := False; 
+   Longitud_String : CONSTANT Integer := 30; 
+   --Constante que define la longitud de los string, mediante los cuales se almacenan los nombres 
+   --de fichero original y final. 
+   Origen, 
+   Destino : String (1 .. Longitud_String); 
+   F_Destino : File_Type; 
+   Palabra, 
+   Palabra_Normalizada : Tpalabra; 
+   Caracter : Character; 
+   PROCEDURE Tratar_Argumentos ( 
+   Argumentos_Correctos : OUT Boolean; 
+   O, 
+   D : IN OUT String ) IS SEPARATE; 
+   BEGIN 
+   Put_Line("Bienvenido al programa Formateador de codigo fuente."); 
+   Tratar_Argumentos(Argumentos_Correctos, Origen, Destino); 
+   IF Argumentos_Correctos THEN 
+      Open(F_Origen,In_File,"Origen.txt"); 
+      Create(F_Destino,Out_File,"a.txt"); 
+      WHILE NOT End_Of_File(F_Origen) LOOP 
+         Get(Palabra,Palabra_normalizada,Caracter,F_Origen); 
+         Analizar_Palabra(Palabra,Palabra_normalizada); 
+         Put(Palabra,F_Origen,F_Destino); 
+         END LOOP; 
+   Put_Line("El formateador ha creado con exito el fichero "&Destino&""); 
+   ELSE 
+   Put_Line( 
+   "El formateador no puede trabajar con argumentos incorrectos, fin de la ejecucion"); 
+   END IF; 
+END Formateador; 
